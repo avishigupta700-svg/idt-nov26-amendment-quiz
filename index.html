@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GST Amendments Quiz — CA Final IDT (Nov 2026)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+:root{
+  --font-display:'Poppins',sans-serif;
+  --font-body:'Inter',sans-serif;
+  --bg1:#f3ecff;
+  --bg2:#eef2ff;
+  --card-bg:rgba(255,255,255,0.66);
+  --card-bg-solid:#ffffff;
+  --accent:#7c3aed;
+  --accent2:#4f46e5;
+  --accent-grad:linear-gradient(135deg,#7c3aed,#4f46e5);
+  --accent-grad-soft:linear-gradient(135deg,#a78bfa,#818cf8);
+  --success:#10b981;
+  --danger:#f43f5e;
+  --warn:#f59e0b;
+  --text:#1e1b2e;
+  --text2:#5b5470;
+  --text3:#9891a8;
+  --border:rgba(124,58,237,0.14);
+  --shadow-sm:0 2px 10px rgba(76,29,149,0.06);
+  --shadow-md:0 8px 30px rgba(76,29,149,0.12);
+  --shadow-lg:0 16px 48px rgba(76,29,149,0.16);
+  --radius:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);color:var(--text);min-height:100vh;overflow-x:hidden;
+  background:linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 45%,#f7f5ff 100%);
+  position:relative;
+}
+
+/* ── FULL PAGE WATER RIPPLE (background, never blocks clicks) ── */
+#bg-ripple{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;opacity:0.9}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.22)}100%{transform:scale(1)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{transform:scale(0.95);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes popIn{from{opacity:0;transform:scale(0.97) translateY(4px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes fadeInItem{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes glowRed{0%{box-shadow:0 0 0 0 rgba(244,63,94,.22);border-color:var(--danger)}70%{box-shadow:0 0 0 6px rgba(244,63,94,0);border-color:var(--danger)}100%{box-shadow:0 0 0 0 rgba(244,63,94,0)}}
+@keyframes blink{from{opacity:1}to{opacity:.25}}
+@keyframes floatGlow{0%,100%{box-shadow:0 0 0 4px rgba(124,58,237,0.08),var(--shadow-md)}50%{box-shadow:0 0 0 8px rgba(124,58,237,0.14),var(--shadow-md)}}
+
+.screen{display:none}
+.screen.active{display:block;animation:fadeInUp .4s cubic-bezier(.16,1,.3,1) forwards}
+
+/* ── TOP BAR ── */
+.top-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.85rem 1.4rem;background:rgba(255,255,255,0.55);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:200;
+  box-shadow:var(--shadow-sm);flex-wrap:wrap;gap:.6rem
+}
+.brand-logo{display:flex;align-items:center;gap:10px}
+.brand-icon{
+  width:36px;height:36px;background:var(--accent-grad);
+  border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(124,58,237,0.28);color:#fff
+}
+.brand-name{font-size:14px;font-weight:700;color:var(--text);font-family:var(--font-display)}
+.brand-sub{font-size:10px;color:var(--text3);margin-top:1px;letter-spacing:.4px}
+
+.score-ticker{display:flex;gap:6px;align-items:center}
+.ticker-item{
+  display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.7);
+  border:1px solid var(--border);border-radius:20px;padding:5px 12px;
+  font-size:11px;box-shadow:var(--shadow-sm)
+}
+.ticker-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dot-g{background:var(--success)}.dot-r{background:var(--danger)}.dot-b{background:var(--accent)}
+.ticker-val{font-weight:700;font-size:13px;min-width:20px;display:inline-block;text-align:center;color:var(--text)}
+.ticker-lbl{color:var(--text3);font-size:10px}
+.pop{animation:pop .32s cubic-bezier(.175,.885,.32,1.275)}
+.total-score-btn{
+  display:flex;align-items:center;gap:6px;padding:7px 14px;
+  background:var(--accent-grad);border:none;color:#fff;
+  font-family:var(--font-display);font-size:11px;font-weight:600;
+  cursor:pointer;border-radius:20px;transition:all .2s;box-shadow:0 4px 14px rgba(124,58,237,.28)
+}
+.total-score-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,58,237,.36)}
+.total-score-btn .ts-val{font-size:13px;font-weight:700}
+
+/* ── SCORE OVERLAY ── */
+.score-overlay{position:fixed;inset:0;background:rgba(30,27,46,.25);z-index:10000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.score-overlay.show{display:flex}
+.score-popup{background:var(--card-bg-solid);border-radius:22px;padding:1.6rem;max-width:340px;width:90%;box-shadow:var(--shadow-lg);animation:scaleIn .3s cubic-bezier(.16,1,.3,1)}
+.score-popup-title{font-size:13px;color:var(--accent);letter-spacing:1px;margin-bottom:1rem;text-align:center;font-weight:700;font-family:var(--font-display)}
+.score-popup-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:.9rem}
+.sp-cell{background:var(--bg2);border-radius:14px;padding:.65rem;text-align:center}
+.sp-val{font-size:22px;font-weight:700;margin-bottom:2px;color:var(--text)}
+.sp-lbl{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+.sp-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:.9rem}
+.sp-cell2{background:var(--bg2);border-radius:14px;padding:.65rem;text-align:center}
+.sp-val2{font-size:19px;font-weight:700}
+.sp-lbl2{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+.score-popup-close{width:100%;padding:10px;background:var(--bg2);border:none;color:var(--text2);font-family:var(--font-display);font-size:11px;font-weight:600;cursor:pointer;border-radius:12px;transition:all .2s}
+.score-popup-close:hover{background:#e8e2ff;color:var(--accent)}
+
+/* ══════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════ */
+#app{max-width:800px;margin:0 auto;padding:1.2rem 1.2rem 3rem;position:relative;z-index:1}
+#start-screen{padding:2rem .5rem 2.5rem}
+
+.start-hero{text-align:center;margin-bottom:2rem}
+.title-l1{font-size:32px;font-weight:800;color:var(--text);font-family:var(--font-display);line-height:1.15}
+.title-l1 span{background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub-title{font-size:13px;color:var(--text2);margin-top:.6rem}
+
+.start-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:1.6rem 0}
+.stat-box{background:var(--card-bg);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:16px;padding:.9rem .5rem;text-align:center;box-shadow:var(--shadow-sm)}
+.stat-num{font-size:22px;font-weight:800;color:var(--accent);font-family:var(--font-display)}
+.stat-lbl{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-top:3px}
+
+.scoring-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:1.6rem}
+.scoring-pill{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600}
+.pill-correct{background:rgba(16,185,129,.1);color:#059669}
+.pill-wrong{background:rgba(244,63,94,.1);color:#e11d48}
+.pill-skip{background:rgba(148,163,184,.14);color:var(--text2)}
+.pill-msq{background:rgba(124,58,237,.1);color:var(--accent)}
+
+/* Name / ID card */
+.name-card{
+  position:relative;overflow:hidden;
+  max-width:460px;margin:0 auto 1.6rem;
+  background:var(--card-bg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--border);border-radius:24px;
+  padding:1.8rem 1.8rem 1.5rem;
+  box-shadow:var(--shadow-lg);
+  animation:floatGlow 3.4s ease-in-out infinite
+}
+.name-card-header{display:flex;align-items:center;gap:12px;margin-bottom:1.1rem}
+.name-card-icon{width:42px;height:42px;background:var(--accent-grad);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;color:#fff;box-shadow:0 4px 14px rgba(124,58,237,.28)}
+.name-card-title{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--text)}
+.name-card-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.name-input-lbl{display:block;font-size:11px;color:var(--text2);font-weight:600;margin-bottom:8px}
+.name-input{
+  width:100%;padding:14px 16px;
+  font-family:var(--font-body);font-size:15px;font-weight:600;
+  border:1.5px solid var(--border);background:rgba(255,255,255,0.8);color:var(--text);
+  border-radius:14px;outline:none;
+  transition:border-color .25s,box-shadow .25s
+}
+.name-input::placeholder{color:var(--text3);font-weight:500}
+.name-input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(124,58,237,0.12)}
+.warn-bar{
+  display:flex;align-items:flex-start;gap:9px;margin-top:1rem;
+  padding:.75rem .95rem;background:rgba(244,63,94,0.06);
+  border-radius:12px
+}
+.warn-bar-text{font-size:11px;color:#7f1d3a;line-height:1.6}
+.warn-bar-text b{color:var(--danger)}
+
+.topics-grid{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:1.6rem}
+.topic-tag{font-size:11px;padding:6px 13px;border-radius:20px;background:rgba(255,255,255,0.6);border:1px solid var(--border);color:var(--accent2);font-weight:500;transition:all .2s}
+.topic-tag:hover{background:#fff;box-shadow:var(--shadow-sm)}
+
+.start-btn{
+  display:inline-flex;align-items:center;gap:10px;padding:16px 48px;
+  background:var(--accent-grad);border:none;
+  color:#fff;font-family:var(--font-display);font-size:14px;font-weight:700;
+  cursor:pointer;border-radius:16px;
+  transition:all .25s;box-shadow:0 8px 24px rgba(124,58,237,.32)
+}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(124,58,237,.42)}
+.start-btn:active{transform:scale(.97)}
+.start-footer{font-size:11px;color:var(--text3);margin-top:1.1rem;text-align:center}
+
+/* ══════════════════════════════════════
+   QUIZ SCREEN
+══════════════════════════════════════ */
+.progress-section{margin-bottom:.9rem}
+.progress-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.q-label{font-size:12px;color:var(--accent);font-weight:700}
+.q-topic-badge{font-size:11px;padding:4px 12px;background:rgba(124,58,237,.08);color:var(--accent2);border-radius:20px;max-width:58%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+.progress-track{height:8px;background:rgba(124,58,237,.08);border-radius:6px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent-grad);transition:width .4s cubic-bezier(.4,0,.2,1);border-radius:6px}
+.seg-track{display:flex;gap:2px;margin-top:4px}
+.seg{flex:1;height:4px;border-radius:2px;background:rgba(124,58,237,.08);transition:background .3s}
+.seg.sc{background:var(--success)}.seg.sw{background:var(--danger)}.seg.ss{background:var(--text3)}.seg.cur{background:var(--warn)}
+
+.timer-section{display:flex;align-items:center;gap:14px;margin-bottom:.9rem;background:var(--card-bg);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:18px;padding:.8rem 1rem;transition:border-color .3s,box-shadow .3s;box-shadow:var(--shadow-sm)}
+.timer-section.dng-pulse{animation:glowRed 1.5s infinite}
+.timer-ring{width:48px;height:48px;position:relative;flex-shrink:0}
+.timer-ring svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:rgba(124,58,237,.1);stroke-width:4}
+.ring-fg{fill:none;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .95s linear,stroke .3s}
+.timer-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--accent)}
+.timer-text.dng{color:var(--danger);animation:blink .5s ease-in-out infinite alternate}
+.timer-bars{flex:1;display:flex;flex-direction:column;gap:6px}
+.timer-bar-label{display:flex;justify-content:space-between;align-items:center}
+.tbl-text{font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.tbl-val{font-size:12px;font-weight:700;color:var(--accent)}
+.tbl-val.dng{color:var(--danger)}
+.bar-track{height:6px;background:rgba(124,58,237,.08);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px}
+.bar-time{background:var(--accent-grad);transition:width .95s linear,background .3s}
+.bar-time.dng{background:linear-gradient(90deg,var(--danger),var(--warn))}
+.bar-prog{background:var(--accent-grad);transition:width .4s}
+
+.q-type-badge-el{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:.5rem}
+.q-type-single{background:rgba(79,70,229,.08);color:var(--accent2)}
+.q-type-multi{background:rgba(124,58,237,.1);color:var(--accent)}
+
+.q-card{background:var(--card-bg);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:20px;padding:1.3rem 1.4rem;margin-bottom:.9rem;animation:slideIn .38s cubic-bezier(.2,.8,.2,1) both;box-shadow:var(--shadow-md)}
+.q-num{font-size:10px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:.4rem}
+.q-text{font-size:15px;line-height:1.7;color:var(--text);font-weight:500}
+.q-instruction{font-size:11px;color:var(--accent2);margin-top:.4rem;font-style:italic}
+
+.options{display:flex;flex-direction:column;gap:9px;margin-bottom:.9rem}
+.opt{
+  width:100%;padding:.85rem 1.1rem;border:1.5px solid var(--border);border-radius:14px;
+  cursor:pointer;font-size:13.5px;line-height:1.55;display:flex;gap:12px;align-items:flex-start;
+  background:rgba(255,255,255,0.6);color:var(--text);font-family:var(--font-body);
+  transition:all .18s;text-align:left;animation:popIn .28s cubic-bezier(.34,1.56,.64,1) both;
+  box-shadow:var(--shadow-sm)
+}
+.opt:hover:not(.locked-opt){border-color:var(--accent);background:rgba(255,255,255,0.92);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.opt:active:not(.locked-opt){transform:scale(.99)}
+.opt-letter{font-weight:700;min-width:22px;font-size:11px;color:var(--accent2);flex-shrink:0;margin-top:1px}
+.opt:hover:not(.locked-opt) .opt-letter{color:var(--accent)}
+.opt.ms-selected{border-color:var(--accent)!important;background:rgba(124,58,237,.07)!important}
+.opt.ms-selected .opt-letter{color:var(--accent)!important}
+.opt.correct{border-color:var(--success)!important;background:rgba(16,185,129,.08)!important;color:#047857!important;box-shadow:0 0 0 3px rgba(16,185,129,.1)!important}
+.opt.correct .opt-letter{color:#059669!important}
+.opt.wrong{border-color:var(--danger)!important;background:rgba(244,63,94,.07)!important;color:#be123c!important;box-shadow:0 0 0 3px rgba(244,63,94,.08)!important}
+.opt.wrong .opt-letter{color:var(--danger)!important}
+.opt.locked-opt{cursor:default;pointer-events:none}
+.opt:nth-child(1){animation-delay:.04s}.opt:nth-child(2){animation-delay:.08s}.opt:nth-child(3){animation-delay:.12s}.opt:nth-child(4){animation-delay:.16s}
+
+.ms-submit-row{margin-bottom:.9rem;display:none}
+.ms-submit-btn{
+  padding:11px 26px;background:var(--accent-grad);border:none;
+  color:#fff;font-family:var(--font-display);font-size:13px;font-weight:700;
+  cursor:pointer;border-radius:14px;transition:all .2s;
+  box-shadow:0 4px 14px rgba(124,58,237,.28)
+}
+.ms-submit-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,58,237,.36)}
+.ms-submit-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+.feedback{margin-bottom:.9rem;padding:.9rem 1.1rem;border-radius:16px;font-size:12px;line-height:1.75;display:none}
+.feedback.show{display:block;animation:slideIn .3s cubic-bezier(.16,1,.3,1)}
+.feedback.cfb{background:rgba(16,185,129,.08);color:#065f46}
+.feedback.wfb{background:rgba(244,63,94,.06);color:#881337}
+.feedback.sfb{background:rgba(245,158,11,.08);color:#78350f}
+.fb-label{font-size:12px;font-weight:700;margin-bottom:4px}
+.cfb .fb-label{color:#059669}.wfb .fb-label{color:var(--danger)}.sfb .fb-label{color:var(--warn)}
+
+.nav-row{display:flex;gap:9px;margin-top:.3rem}
+.nav-btn{flex:1;padding:13px;font-family:var(--font-display);font-size:13px;font-weight:700;cursor:pointer;border-radius:14px;transition:all .18s;box-shadow:var(--shadow-sm)}
+.nav-btn:active{transform:scale(.97)}
+.btn-prev{border:1.5px solid var(--border);background:rgba(255,255,255,0.6);color:var(--text2)}
+.btn-prev:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.btn-prev:disabled{opacity:.35;cursor:not-allowed}
+.btn-next{border:none;background:var(--accent-grad);color:#fff}
+.btn-next:hover{box-shadow:0 6px 18px rgba(124,58,237,.3)}
+.jump-row{display:flex;gap:7px;margin-top:8px}
+.jump-btn{flex:1;padding:10px 6px;font-family:var(--font-display);font-size:11px;font-weight:700;cursor:pointer;border-radius:12px;transition:all .18s;box-shadow:var(--shadow-sm)}
+.jump-btn:active{transform:scale(.97)}
+.jump-btn:disabled{opacity:.35;cursor:not-allowed}
+.jump-answered{border:1.5px solid var(--success);background:rgba(16,185,129,.06);color:#059669}
+.jump-unanswered{border:1.5px solid var(--warn);background:rgba(245,158,11,.06);color:var(--warn)}
+.jump-badge{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;font-size:9px;font-weight:700;margin-left:4px;vertical-align:middle}
+.jb-ans{background:var(--success);color:#fff}.jb-un{background:var(--warn);color:#fff}
+
+/* ══════════════════════════════════════
+   SCORE SCREEN
+══════════════════════════════════════ */
+#score-screen{padding:.4rem 0}
+.score-hero{text-align:center;padding:1.8rem 1.2rem;background:var(--card-bg);backdrop-filter:blur(18px);border:1px solid var(--border);border-radius:24px;margin-bottom:.9rem;animation:scaleIn .42s cubic-bezier(.16,1,.3,1) both;box-shadow:var(--shadow-lg)}
+.score-ring{width:140px;height:140px;position:relative;margin:0 auto .9rem}
+.score-ring svg{transform:rotate(-90deg)}
+.sc-bg{fill:none;stroke:rgba(124,58,237,.1);stroke-width:10}
+.sc-fg{fill:none;stroke-width:10;stroke-linecap:round;stroke-dasharray:326.73;stroke-dashoffset:326.73;transition:stroke-dashoffset 1.5s cubic-bezier(.4,0,.2,1),stroke .5s}
+.score-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.score-center-pts{font-size:28px;font-weight:800;font-family:var(--font-display);transition:color .5s}
+.score-center-acc{font-size:14px;font-weight:700;color:var(--text2)}
+.score-center-lbl{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.6px}
+.result-title{font-size:16px;font-weight:800;color:var(--text);font-family:var(--font-display);margin-bottom:.4rem}
+.result-msg{font-size:12px;color:var(--text2)}
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:.9rem 0}
+.s-card{background:var(--card-bg);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:16px;padding:.9rem;text-align:center;position:relative;overflow:hidden;animation:popIn .4s cubic-bezier(.16,1,.3,1) both;box-shadow:var(--shadow-sm)}
+.s-val{font-size:26px;font-weight:800;margin-bottom:3px;font-family:var(--font-display)}
+.s-card.sg .s-val{color:var(--success)}.s-card.sr .s-val{color:var(--danger)}.s-card.sb .s-val{color:var(--text2)}
+.s-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px}
+.s-card:nth-child(1){animation-delay:.05s}.s-card:nth-child(2){animation-delay:.1s}.s-card:nth-child(3){animation-delay:.15s}
+.breakdown{background:var(--card-bg);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:18px;padding:1rem;margin-bottom:.9rem;box-shadow:var(--shadow-sm)}
+.bk-title{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:.7rem;font-weight:700}
+.bk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center}
+.bk-lbl{font-size:11px;color:var(--text2);margin-bottom:3px}
+.bk-val{font-size:18px;font-weight:700}
+.bk-val.vc{color:var(--accent)}.bk-val.vp{color:var(--accent2)}.bk-val.vr{color:var(--warn)}
+.btn-row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:.9rem}
+.action-btn{flex:1;padding:13px;font-family:var(--font-display);font-size:13px;font-weight:700;cursor:pointer;border-radius:16px;transition:all .18s;min-width:100px;box-shadow:var(--shadow-sm)}
+.action-btn:active{transform:scale(.97)}
+.action-btn.ap{border:none;background:var(--accent-grad);color:#fff}
+.action-btn.ap:hover{box-shadow:0 8px 22px rgba(124,58,237,.32)}
+.action-btn.as{border:1.5px solid var(--border);background:rgba(255,255,255,0.6);color:var(--text2)}
+.action-btn.as:hover{border-color:var(--accent);color:var(--accent)}
+
+#review-section{margin-top:.9rem;display:none}
+.review-header{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--accent2);margin-bottom:.7rem;font-weight:700}
+.review-item{border:1px solid var(--border);border-radius:16px;padding:.9rem;margin-bottom:.6rem;background:var(--card-bg);backdrop-filter:blur(10px);animation:fadeInItem .28s cubic-bezier(.16,1,.3,1) both;box-shadow:var(--shadow-sm)}
+.review-q{font-size:12.5px;font-weight:600;margin-bottom:.4rem;line-height:1.55;color:var(--text)}
+.review-ans{font-size:11px;margin-bottom:2px}
+.rv-c{color:#059669;font-weight:600}.rv-w{color:var(--danger);font-weight:600}.rv-s{color:var(--text3);font-weight:600}
+.review-exp{font-size:11px;color:var(--text2);line-height:1.65;border-top:1px solid var(--border);padding-top:.4rem;margin-top:.4rem}
+.review-pts{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:5px}
+.pts-pos{background:rgba(16,185,129,.1);color:#059669}
+.pts-neg{background:rgba(244,63,94,.08);color:var(--danger)}
+.pts-zero{background:rgba(148,163,184,.12);color:var(--text3)}
+
+/* ══ LEADERBOARD ══ */
+#leaderboard-screen{padding:.4rem 0}
+#leaderboard-table{width:100%;border-collapse:collapse;font-size:12px;text-align:left;margin-top:.6rem}
+#leaderboard-table th{font-weight:700;color:var(--text3);border-bottom:1.5px solid var(--border);padding:9px 6px;font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+#leaderboard-table td{padding:11px 6px;border-bottom:1px solid var(--border);vertical-align:middle}
+#leaderboard-table tr:hover{background:rgba(124,58,237,.03)}
+.rank-badge{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;font-weight:700;border-radius:50%;font-size:10px;background:rgba(124,58,237,.08);color:var(--text2)}
+.rank-1{background:rgba(245,158,11,.14);color:#b45309}
+.rank-2{background:rgba(124,58,237,.14);color:var(--accent)}
+.rank-3{background:rgba(79,70,229,.14);color:var(--accent2)}
+</style>
+</head>
+<body>
+
+<canvas id="bg-ripple"></canvas>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="brand-logo">
+    <div class="brand-icon">✦</div>
+    <div>
+      <div class="brand-name">GST Amendments Quiz</div>
+      <div class="brand-sub">CA Final · Indirect Tax Laws · What Changed?</div>
+    </div>
+  </div>
+  <div id="live-ticker" class="score-ticker" style="display:none">
+    <div class="ticker-item"><div class="ticker-dot dot-g"></div><span class="ticker-val" id="t-sc">0</span><span class="ticker-lbl">&nbsp;correct</span></div>
+    <div class="ticker-item"><div class="ticker-dot dot-r"></div><span class="ticker-val" id="t-wr">0</span><span class="ticker-lbl">&nbsp;wrong</span></div>
+    <div class="ticker-item"><div class="ticker-dot dot-b"></div><span class="ticker-val" id="t-acc">—</span><span class="ticker-lbl">&nbsp;acc</span></div>
+  </div>
+  <button class="total-score-btn" id="total-score-btn" onclick="showScoreOverlay()" style="display:none">Points&nbsp;<span class="ts-val" id="ts-live">0</span></button>
+</div>
+
+<!-- SCORE OVERLAY -->
+<div class="score-overlay" id="score-overlay" onclick="closeScoreOverlay(event)">
+  <div class="score-popup">
+    <div class="score-popup-title">Live Score</div>
+    <div class="score-popup-grid">
+      <div class="sp-cell"><div class="sp-val" id="sp-cor" style="color:var(--success)">0</div><div class="sp-lbl">Correct</div></div>
+      <div class="sp-cell"><div class="sp-val" id="sp-wr" style="color:var(--danger)">0</div><div class="sp-lbl">Wrong</div></div>
+      <div class="sp-cell"><div class="sp-val" id="sp-sk" style="color:var(--text3)">0</div><div class="sp-lbl">Skipped</div></div>
+    </div>
+    <div class="sp-row2">
+      <div class="sp-cell2"><div class="sp-val2" id="sp-pts" style="color:var(--accent)">0</div><div class="sp-lbl2">Total Points</div></div>
+      <div class="sp-cell2"><div class="sp-val2" id="sp-acc" style="color:var(--accent2)">—</div><div class="sp-lbl2">Accuracy</div></div>
+    </div>
+    <button class="score-popup-close" onclick="document.getElementById('score-overlay').classList.remove('show')">Close</button>
+  </div>
+</div>
+
+<div id="app">
+
+<!-- ══ START SCREEN ══ -->
+<div id="start-screen" class="screen active">
+  <div class="start-hero">
+    <div class="title-l1">GST Amendments <span>What Changed?</span></div>
+    <div class="sub-title">GST 2.0 Rates · Finance Acts 2024–26 · Theory, Numerical &amp; Tricky — 50 Questions · 60s Each</div>
+  </div>
+  <div class="start-stats">
+    <div class="stat-box"><div class="stat-num">50</div><div class="stat-lbl">Questions</div></div>
+    <div class="stat-box"><div class="stat-num">60s</div><div class="stat-lbl">Per Q</div></div>
+    <div class="stat-box"><div class="stat-num">200</div><div class="stat-lbl">Max Pts</div></div>
+    <div class="stat-box"><div class="stat-num">9</div><div class="stat-lbl">Topics</div></div>
+  </div>
+  <div class="scoring-row">
+    <span class="scoring-pill pill-correct">+4 Correct</span>
+    <span class="scoring-pill pill-wrong">−1 Wrong</span>
+    <span class="scoring-pill pill-skip">0 Skip</span>
+    <span class="scoring-pill pill-msq">MSQ: +4 all-correct · 0 partial</span>
+  </div>
+
+  <div class="name-card" id="name-card">
+    <div class="name-card-header">
+      <div class="name-card-icon">👤</div>
+      <div>
+        <div class="name-card-title">Enter Your Details</div>
+        <div class="name-card-sub">Required for leaderboard submission</div>
+      </div>
+    </div>
+    <label class="name-input-lbl" for="username">Name / User ID</label>
+    <input type="text" id="username" class="name-input" placeholder="Your name or user ID" maxlength="40" oninput="this.style.borderColor='var(--border)'">
+    <div class="warn-bar">
+      <span>⚠️</span>
+      <div class="warn-bar-text"><b>Use your real name or ID</b> — this is required for accurate leaderboard ranking.</div>
+    </div>
+  </div>
+
+  <div class="topics-grid">
+    <span class="topic-tag">GST 2.0 Rates</span>
+    <span class="topic-tag">Registration</span>
+    <span class="topic-tag">Refunds</span>
+    <span class="topic-tag">Input Tax Credit</span>
+    <span class="topic-tag">Valuation &amp; Credit Notes</span>
+    <span class="topic-tag">Place of Supply</span>
+    <span class="topic-tag">Demand &amp; Appeals</span>
+    <span class="topic-tag">Finance Act Changes</span>
+    <span class="topic-tag">Rate Numericals</span>
+  </div>
+
+  <div style="text-align:center">
+    <button class="start-btn" onclick="startQuiz()">Begin Quiz</button>
+  </div>
+  <div class="start-footer">GST Amendments Quiz · CA Final IDT · +4 / −1 Scoring</div>
+</div>
+
+<!-- ══ QUIZ SCREEN ══ -->
+<div id="quiz-screen" class="screen">
+  <div class="progress-section">
+    <div class="progress-info">
+      <span class="q-label" id="q-counter">Q 01 / 50</span>
+      <span class="q-topic-badge" id="q-topic"></span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-bar" style="width:0%"></div></div>
+    <div class="seg-track" id="seg-track"></div>
+  </div>
+
+  <div class="timer-section" id="timer-section">
+    <div class="timer-ring">
+      <svg width="48" height="48" viewBox="0 0 48 48">
+        <circle class="ring-bg" cx="24" cy="24" r="19"/>
+        <circle class="ring-fg" id="ring-fg" cx="24" cy="24" r="19" stroke="var(--accent)" stroke-dasharray="119.4" stroke-dashoffset="0"/>
+      </svg>
+      <div class="timer-text" id="timer-text">1:00</div>
+    </div>
+    <div class="timer-bars">
+      <div class="timer-bar-label"><span class="tbl-text">Time Remaining</span><span class="tbl-val" id="tbl-val">60s</span></div>
+      <div class="bar-track"><div class="bar-fill bar-time" id="time-bar" style="width:100%"></div></div>
+      <div class="timer-bar-label" style="margin-top:2px"><span class="tbl-text">Quiz Progress</span><span class="tbl-val" id="pbl-val">0%</span></div>
+      <div class="bar-track"><div class="bar-fill bar-prog" id="pct-bar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="q-card" id="q-card">
+    <div id="q-type-badge-wrap"></div>
+    <div class="q-num" id="q-num">Question 01</div>
+    <div class="q-text" id="q-text"></div>
+    <div class="q-instruction" id="q-instruction"></div>
+  </div>
+
+  <div class="options" id="options"></div>
+  <div class="ms-submit-row" id="ms-submit-row">
+    <button class="ms-submit-btn" id="ms-submit-btn" onclick="submitMultiSelect()">Submit Answer</button>
+  </div>
+  <div class="feedback" id="feedback"><div class="fb-label" id="fb-lbl"></div><div id="fb-txt"></div></div>
+
+  <div class="nav-row">
+    <button class="nav-btn btn-prev" id="btn-prev" onclick="prevQ()" disabled>Previous</button>
+    <button class="nav-btn btn-next" id="btn-next" onclick="nextQ()">Next</button>
+  </div>
+  <div class="jump-row">
+    <button class="jump-btn jump-answered" id="jump-ans-btn" onclick="jumpToAnswered()" disabled>Answered <span class="jump-badge jb-ans" id="jb-ans-count">0</span></button>
+    <button class="jump-btn jump-unanswered" id="jump-un-btn" onclick="jumpToUnanswered()" disabled>Unanswered <span class="jump-badge jb-un" id="jb-un-count">0</span></button>
+  </div>
+</div>
+
+<!-- ══ SCORE SCREEN ══ -->
+<div id="score-screen" class="screen">
+  <div class="score-hero">
+    <div class="score-ring">
+      <svg width="140" height="140" viewBox="0 0 140 140">
+        <circle class="sc-bg" cx="70" cy="70" r="52"/>
+        <circle class="sc-fg" id="sc-fg" cx="70" cy="70" r="52"/>
+      </svg>
+      <div class="score-center">
+        <div class="score-center-pts" id="final-pts">0</div>
+        <div class="score-center-lbl">total pts</div>
+        <div class="score-center-acc" id="final-acc">0%</div>
+        <div class="score-center-lbl">accuracy</div>
+      </div>
+    </div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-msg" id="result-msg"></div>
+  </div>
+  <div class="summary-grid">
+    <div class="s-card sg"><div class="s-val" id="s-cor">0</div><div class="s-lbl">Correct</div></div>
+    <div class="s-card sr"><div class="s-val" id="s-wr">0</div><div class="s-lbl">Wrong</div></div>
+    <div class="s-card sb"><div class="s-val" id="s-sk">0</div><div class="s-lbl">Skipped</div></div>
+  </div>
+  <div class="breakdown">
+    <div class="bk-title">Score Breakdown</div>
+    <div class="bk-grid">
+      <div><div class="bk-lbl">Total Points</div><div class="bk-val vc" id="bk-pts">0</div></div>
+      <div><div class="bk-lbl">Accuracy</div><div class="bk-val vp" id="bk-acc">—</div></div>
+      <div><div class="bk-lbl">Rank</div><div class="bk-val vr" id="bk-rank">—</div></div>
+    </div>
+  </div>
+  <div class="btn-row">
+    <button class="action-btn ap" onclick="restartQuiz()">Retake</button>
+    <button class="action-btn as" onclick="toggleReview()">Review</button>
+    <button class="action-btn ap" onclick="goToLeaderboard()">Leaderboard</button>
+  </div>
+  <div id="review-section">
+    <div class="review-header">Answer Review</div>
+    <div id="review-list"></div>
+  </div>
+</div>
+
+<!-- ══ LEADERBOARD SCREEN ══ -->
+<div id="leaderboard-screen" class="screen">
+  <div class="score-hero" id="lb-hero">
+    <div class="result-title" style="font-size:18px">Leaderboard</div>
+    <div class="result-msg" style="margin-top:5px">Real-time ranking · All players · Score + Accuracy</div>
+  </div>
+  <div class="breakdown" style="padding:1.1rem">
+    <div class="bk-title" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem">
+      <span>All Players — Ranked</span>
+      <span id="leaderboard-status" style="font-size:10px;color:var(--warn);font-weight:700">LOADING...</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table id="leaderboard-table">
+        <thead><tr>
+          <th style="width:60px">Rank</th>
+          <th>Player</th>
+          <th style="text-align:right;width:80px">Pts</th>
+          <th style="text-align:right;width:100px">Accuracy</th>
+        </tr></thead>
+        <tbody id="leaderboard-body"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="btn-row">
+    <button class="action-btn ap" onclick="restartQuiz()">Play Again</button>
+    <button class="action-btn as" onclick="showScreen('score-screen')">View Score</button>
+  </div>
+</div>
+
+</div><!-- #app -->
+
+<script>
+// ════════════════════════════════════════════════════════
+//  CONSTANTS
+// ════════════════════════════════════════════════════════
+const TT=60, CIRC=119.4, SCIRC=326.73;
+const PTS_CORRECT=4, PTS_WRONG=-1, PTS_SKIP=0;
+const QUIZ_NAME='GST_Amendments_Quiz';
+const WEB_APP_URL='https://script.google.com/macros/s/AKfycbzTdoNGW6PSaUJs0KUppfnNvfLroxhoyPKIKBIl5AcARqyMxK0BM-a30F7hHOdeSZ338A/exec';
+let userName='';
+
+// ════════════════════════════════════════════════════════
+//  QUESTION BANK — GST Amendments (CA Final IDT)
+// ════════════════════════════════════════════════════════
+const QUESTIONS=[
+ {
+  "q": "From 22 September 2025, which is the correct principal rate structure under 'GST 2.0' (apart from nil-rated and special-rate items)?",
+  "opts": [
+   "3%, 12%, 18% and 28% with a new 40% cess",
+   "0%, 5%, 12% and 18% with 28% abolished for all goods",
+   "5%, 12%, 18% and 28% with cess continuing unchanged",
+   "5% merit rate, 18% standard rate and 40% for select luxury and sin goods"
+  ],
+  "a": 3,
+  "t": "GST 2.0 Rates",
+  "type": "single",
+  "e": "The four-slab structure was collapsed into 5% and 18%, with 40% only for select luxury/sin goods. Most 12% items moved to 5% and most 28% items to 18%."
+ },
+ {
+  "q": "[Numerical] A hotel charges ₹7,500 per unit per day (declared tariff). A guest stays for 3 nights in one unit. What is the GST on the room rent under the rates effective 22 September 2025?",
+  "opts": [
+   "₹1,125",
+   "₹2,250",
+   "₹4,050",
+   "₹2,700"
+  ],
+  "a": 0,
+  "t": "Rates · Numerical",
+  "type": "single",
+  "e": "Tariff ≤ ₹7,500 per unit per day is 5% (without ITC). ₹7,500 × 3 = ₹22,500 × 5% = ₹1,125. Old rate was 12% (₹2,700). The limit is 'less than or equal to' ₹7,500, so exactly ₹7,500 qualifies."
+ },
+ {
+  "q": "[Tricky] Hotel A has a declared room tariff of ₹8,000 per day and Hotel B has ₹7,000 per day. Which statement is correct from 22 September 2025?",
+  "opts": [
+   "A: 18% with ITC; B: 5% without ITC",
+   "A: 5% without ITC; B: 5% without ITC",
+   "A: 12% with ITC; B: 5% with ITC",
+   "A: 18% without ITC; B: 12% with ITC"
+  ],
+  "a": 0,
+  "t": "GST 2.0 Rates",
+  "type": "single",
+  "e": "The 7,500 cut-off decides the rate and the ITC position: up to ₹7,500 = 5% without ITC; above ₹7,500 = 18% with ITC. Memory hook: low tariff = low rate, but no credit."
+ },
+ {
+  "q": "[Numerical] Mr. Rao renews an individual family-floater health insurance policy on 10 October 2025. Premium before tax is ₹60,000. What GST is payable on the premium?",
+  "opts": [
+   "₹3,000",
+   "₹7,200",
+   "Nil",
+   "₹10,800"
+  ],
+  "a": 2,
+  "t": "Rates · Numerical",
+  "type": "single",
+  "e": "Services by way of individual life and health insurance were exempted from 22 September 2025 (earlier 18%, i.e. ₹10,800). Group policies and other insurance classes are not covered by this change."
+ },
+ {
+  "q": "[Numerical] A retailer sells two shirts at a price of ₹2,400 and ₹2,600 per piece (excluding GST). Under the rates effective 22 September 2025, what is the total GST on the two shirts?",
+  "opts": [
+   "₹250",
+   "₹900",
+   "₹600",
+   "₹588"
+  ],
+  "a": 3,
+  "t": "Rates · Numerical",
+  "type": "single",
+  "e": "Apparel up to ₹2,500 per piece is 5%; above ₹2,500 per piece is 18%. (2,400 × 5%) + (2,600 × 18%) = 120 + 468 = ₹588. Old law: 5% up to ₹1,000 and 12% above, which would give ₹600."
+ },
+ {
+  "q": "[Numerical] A gym (health club) collects ₹50,000 in fees in a month and has ₹2,000 of GST on its inward supplies. Services of health clubs, salons, barbers and yoga now attract GST at 5% without ITC. What is the net GST payable?",
+  "opts": [
+   "₹9,000",
+   "₹500",
+   "₹2,500",
+   "₹7,000"
+  ],
+  "a": 2,
+  "t": "Rates · Numerical",
+  "type": "single",
+  "e": "5% × ₹50,000 = ₹2,500. Because the 5% rate comes without ITC, the ₹2,000 input GST cannot be set off (that would give ₹500). These services were earlier taxed at 18%."
+ },
+ {
+  "q": "Which statement best describes GST on medicines after 22 September 2025?",
+  "opts": [
+   "Only cancer drugs are at 5%; every other medicine is at 18%",
+   "All medicines are nil-rated",
+   "Specified life-saving drugs are nil-rated and most other drugs/medicaments are at 5%",
+   "All medicines remain at 12%"
+  ],
+  "a": 2,
+  "t": "GST 2.0 Rates",
+  "type": "single",
+  "e": "The reform exempted a list of life-saving drugs and cut the remaining drugs and medicaments (earlier 12% or 18%) to 5%."
+ },
+ {
+  "q": "Which of the following are nil-rated from 22 September 2025? (Select all that apply)",
+  "opts": [
+   "UHT milk",
+   "Ghee",
+   "Paneer / chena",
+   "Butter"
+  ],
+  "a": [
+   0,
+   2
+  ],
+  "t": "GST 2.0 Rates",
+  "type": "multi",
+  "e": "UHT milk and paneer/chena moved to nil. Butter and ghee were reduced from 12% to 5%, not to nil."
+ },
+ {
+  "q": "Which of the following goods moved from 28% to 18% with effect from 22 September 2025? (Select all that apply)",
+  "opts": [
+   "Air conditioners",
+   "Cement",
+   "Sweetened carbonated beverages",
+   "Pan masala"
+  ],
+  "a": [
+   0,
+   1
+  ],
+  "t": "GST 2.0 Rates",
+  "type": "multi",
+  "e": "Cement and ACs (also TVs, dishwashers and small cars) moved from 28% to 18%. Carbonated sweetened beverages went to 40%, and pan masala/tobacco continued at old rates for now."
+ },
+ {
+  "q": "[Tricky] What is the position of pan masala, gutkha, cigarettes and chewing tobacco from 22 September 2025?",
+  "opts": [
+   "They became nil-rated",
+   "They moved to 40% immediately",
+   "They continue at the earlier rates until compensation-cess liabilities are cleared",
+   "They moved to 18%"
+  ],
+  "a": 2,
+  "t": "GST 2.0 Rates",
+  "type": "single",
+  "e": "The 40% rate was introduced for several luxury/sin goods, but tobacco products and pan masala were kept at their existing rate structure until the compensation cess loan is repaid."
+ },
+ {
+  "q": "[Numerical] A manufacturer in Gujarat makes an intra-State sale of cement worth ₹3,00,000 (excluding tax). What is the CGST payable at the rate effective 22 September 2025?",
+  "opts": [
+   "₹7,500",
+   "₹27,000",
+   "₹42,000",
+   "₹54,000"
+  ],
+  "a": 1,
+  "t": "Rates · Numerical",
+  "type": "single",
+  "e": "Cement is now 18% (earlier 28%). Total GST = ₹54,000, split equally into CGST ₹27,000 and SGST ₹27,000. ₹42,000 is the old CGST at 14%."
+ },
+ {
+  "q": "[Numerical] Air conditioners worth ₹5,00,000 were removed from the factory on 20 September 2025. The invoice was issued on 25 September and payment received on 26 September 2025. The rate fell from 28% to 18% on 22 September 2025. What is the GST payable?",
+  "opts": [
+   "₹25,000",
+   "₹1,40,000",
+   "₹90,000",
+   "₹60,000"
+  ],
+  "a": 2,
+  "t": "Rates · Numerical",
+  "type": "single",
+  "e": "Section 14: supply made before the rate change, with both invoice and payment after the change. The time of supply is the earlier of invoice or payment, i.e. 25 September, so the new 18% rate applies: ₹5,00,000 × 18% = ₹90,000."
+ },
+ {
+  "q": "[Numerical] Televisions worth ₹2,00,000 were supplied on 18 September 2025. The invoice was issued on 19 September and payment received on 26 September 2025. The rate fell from 28% to 18% on 22 September 2025. What is the GST payable?",
+  "opts": [
+   "₹56,000",
+   "₹10,000",
+   "₹36,000",
+   "₹24,000"
+  ],
+  "a": 0,
+  "t": "Rates · Numerical",
+  "type": "single",
+  "e": "Supply before the change and invoice issued before the change, with payment after: the time of supply is the invoice date (19 September), so the old 28% applies: ₹2,00,000 × 28% = ₹56,000. Contrast with the earlier air-conditioner question: the invoice date decides."
+ },
+ {
+  "q": "Job work services in relation to pharmaceutical products are taxable at what rate from 22 September 2025?",
+  "opts": [
+   "18% with ITC",
+   "12% with ITC",
+   "5% without ITC",
+   "5% with ITC (earlier 12%)"
+  ],
+  "a": 3,
+  "t": "GST 2.0 Rates",
+  "type": "single",
+  "e": "Job work for pharmaceutical products (and for hides, skins and leather) was cut from 12% to 5%, and ITC remains available. Do not confuse this with hotel and wellness services, where 5% comes without ITC."
+ },
+ {
+  "q": "Multimodal transportation of goods (without any air leg) attracts which GST treatment from 22 September 2025?",
+  "opts": [
+   "12% without ITC",
+   "5% with full ITC in all cases",
+   "18% with full ITC in all cases",
+   "5% without ITC; if transportation by air is involved, 18% with ITC"
+  ],
+  "a": 3,
+  "t": "GST 2.0 Rates",
+  "type": "single",
+  "e": "The 5%-without-ITC rate is available only if no transportation by air is involved. If air transport forms part of the service, the rate is 18% with ITC."
+ },
+ {
+  "q": "[Tricky] Which of the following statements about GST 2.0 is INCORRECT?",
+  "opts": [
+   "The 12% slab was abolished and all goods taxed at 12% moved to 18%",
+   "Select luxury and sin goods attract 40%",
+   "UHT milk was made nil-rated",
+   "Most of the new rates became effective from 22 September 2025"
+  ],
+  "a": 0,
+  "t": "GST 2.0 Rates",
+  "type": "single",
+  "e": "Most 12% items went to 5% (some to 18%), not all to 18%. The other three statements are correct."
+ },
+ {
+  "q": "What GST rate applies to carbonated sweetened beverages from 22 September 2025?",
+  "opts": [
+   "40% (earlier 28% plus compensation cess)",
+   "18%",
+   "5%",
+   "12%"
+  ],
+  "a": 0,
+  "t": "GST 2.0 Rates",
+  "type": "single",
+  "e": "Aerated/sweetened beverages are among the goods placed in the new 40% slab. The earlier structure was 28% plus 12% cess."
+ },
+ {
+  "q": "Under the simplified GST registration scheme (Rule 14A), a taxpayer may opt for registration if:",
+  "opts": [
+   "Estimated monthly output tax liability does not exceed ₹10 lakh",
+   "The applicant is only a supplier of services",
+   "Aggregate annual turnover is below ₹5 lakh",
+   "Estimated monthly output tax liability does not exceed ₹2.5 lakh"
+  ],
+  "a": 3,
+  "t": "Registration",
+  "type": "single",
+  "e": "Rule 14A (optional) is meant for small, low-risk taxpayers whose estimated total monthly output tax liability is up to ₹2.5 lakh. It runs alongside Rule 9A, which deals with time-bound grant of registration."
+ },
+ {
+  "q": "Which statements about the simplified registration scheme (Rule 14A) are correct? (Select all that apply)",
+  "opts": [
+   "Physical verification of the premises is compulsory in every case",
+   "Only one registration per State/UT per PAN is permitted under this route",
+   "Aadhaar authentication is required",
+   "Registration is to be granted within 3 working days of the ARN"
+  ],
+  "a": [
+   1,
+   2,
+   3
+  ],
+  "t": "Registration",
+  "type": "multi",
+  "e": "Rule 14A is Aadhaar-based and designed to be quick. It does not require compulsory physical verification, and it allows only one registration per State/UT per PAN."
+ },
+ {
+  "q": "The new Rules 9A and 14A of the CGST Rules, 2017 were inserted by Notification No. 18/2025–Central Tax. From which date did they take effect?",
+  "opts": [
+   "1 October 2025",
+   "1 November 2025",
+   "22 September 2025",
+   "1 April 2026"
+  ],
+  "a": 1,
+  "t": "Registration",
+  "type": "single",
+  "e": "The rate changes began on 22 September 2025, but the registration reforms came later, from 1 November 2025. The same date applied to risk-based provisional refunds."
+ },
+ {
+  "q": "The Finance Act, 2026 amends section 54(14) of the CGST Act. What is the change?",
+  "opts": [
+   "The minimum refund threshold is raised from ₹1,000 to ₹5,000",
+   "The threshold is removed for all types of refund claims",
+   "The ₹1,000 minimum refund threshold is removed for exports made with payment of tax",
+   "Refund is now allowed only if the amount exceeds ₹10,000"
+  ],
+  "a": 2,
+  "t": "Refunds",
+  "type": "single",
+  "e": "Earlier no refund of tax or ITC was allowed if the amount was less than ₹1,000. After the amendment this threshold does not apply to exports made with payment of tax. Check the commencement notification for the exam attempt."
+ },
+ {
+  "q": "[Numerical] An exporter claims a refund of zero-rated supply amounting to ₹2,40,000. If 90% is sanctioned provisionally on a risk basis, how much is sanctioned provisionally?",
+  "opts": [
+   "₹2,16,000",
+   "₹2,40,000",
+   "₹1,92,000",
+   "₹2,28,000"
+  ],
+  "a": 0,
+  "t": "Refunds",
+  "type": "single",
+  "e": "Provisional refund is 90% of the amount claimed: ₹2,40,000 × 90% = ₹2,16,000. The balance ₹24,000 is released after final scrutiny. From 1 November 2025 the sanction is based on system-driven risk evaluation."
+ },
+ {
+  "q": "The Finance Act, 2026 amends section 54(6) of the CGST Act. What does it change?",
+  "opts": [
+   "The 90% provisional refund route is extended to refunds arising from an inverted duty structure",
+   "Provisional refund is allowed for excess balance in the cash ledger",
+   "Provisional refund is raised to 100% for exports",
+   "Provisional refund is withdrawn for zero-rated supplies"
+  ],
+  "a": 0,
+  "t": "Refunds",
+  "type": "single",
+  "e": "Section 54(6) already allowed 90% provisional refund for zero-rated supplies. The amendment adds inverted duty structure (IDS) refunds on similar lines."
+ },
+ {
+  "q": "[Tricky] From 1 November 2025, refund of zero-rated supplies may be sanctioned provisionally based on:",
+  "opts": [
+   "System-driven risk evaluation, with the officer able to withhold it in exceptional cases for recorded reasons",
+   "Manual verification of every claim before any sanction",
+   "The date on which the shipping bill was filed",
+   "A flat 100% sanction for all taxpayers without exception"
+  ],
+  "a": 0,
+  "t": "Refunds",
+  "type": "single",
+  "e": "Rule 91(2) was amended to allow a risk-based 90% provisional refund. Officers may withhold provisional refund in exceptional cases with reasons recorded in writing."
+ },
+ {
+  "q": "[Numerical] An exporter paid IGST of ₹800 on an export of goods with payment of tax. Once the Finance Act 2026 amendment to section 54(14) is in force, is a refund of ₹800 admissible?",
+  "opts": [
+   "Yes, but only if the amount is at least ₹500",
+   "Yes, the ₹1,000 threshold does not apply to exports made with payment of tax",
+   "No, refunds below ₹1,000 are never allowed",
+   "Only if the goods were exported under LUT"
+  ],
+  "a": 1,
+  "t": "Refunds",
+  "type": "single",
+  "e": "The threshold relief covers exports with payment of tax. Note the catch: the ₹1,000 limit still applies to other refund categories. LUT exports do not involve payment of tax at all."
+ },
+ {
+  "q": "The Finance Act, 2025 replaced the words in section 17(5)(d) of the CGST Act. Which statement is correct?",
+  "opts": [
+   "The change applies only to buildings constructed after 1 April 2025",
+   "'Plant or machinery' was replaced by 'plant and machinery' retrospectively from 1 July 2017",
+   "'Plant and machinery' was replaced by 'plant or machinery' from 1 April 2025",
+   "The change applies prospectively from 1 October 2025"
+  ],
+  "a": 1,
+  "t": "Input Tax Credit",
+  "type": "single",
+  "e": "The amendment overrides the Supreme Court's Safari Retreats functionality-test approach. It has retrospective effect from 1 July 2017, so a building cannot escape the block by being 'plant' functionally."
+ },
+ {
+  "q": "[Numerical] A company constructs a warehouse building on its own land for its own business use and pays GST of ₹18,00,000 on construction services. After the Finance Act 2025 amendment to section 17(5)(d), how much ITC is admissible?",
+  "opts": [
+   "₹9,00,000",
+   "₹18,00,000",
+   "₹18,00,000 if the building is functionally essential to the business",
+   "Nil"
+  ],
+  "a": 3,
+  "t": "Input Tax Credit",
+  "type": "single",
+  "e": "Construction of immovable property (other than plant and machinery) on own account is blocked even if used for business. The functionality test of Safari Retreats no longer helps because of the retrospective amendment."
+ },
+ {
+  "q": "From 1 April 2025, which statement on Input Service Distributor (ISD) provisions is correct?",
+  "opts": [
+   "ISD can distribute credit on capital goods and inputs",
+   "Distribution of ITC on common input services through ISD is mandatory, and ISD can also distribute credit on inter-State RCM services",
+   "ISD remains optional and covers only goods",
+   "ISD can distribute credit only on intra-State supplies"
+  ],
+  "a": 1,
+  "t": "Input Tax Credit",
+  "type": "single",
+  "e": "Sections 2(61) and 20 were amended: the ISD mechanism covers input services (including inter-State supplies under reverse charge) and its use is mandatory from 1 April 2025. Inputs and capital goods are outside the ISD net."
+ },
+ {
+  "q": "[Numerical] The head office, registered as ISD, receives common input services with IGST of ₹1,20,000. Recipients' turnovers in the preceding financial year: A ₹50 lakh, B ₹30 lakh and C ₹20 lakh. All three benefit from the services. What credit is distributed to B?",
+  "opts": [
+   "₹36,000",
+   "₹40,000",
+   "₹60,000",
+   "₹30,000"
+  ],
+  "a": 0,
+  "t": "Input Tax Credit",
+  "type": "single",
+  "e": "Credit is distributed pro rata to turnover. B's share = 30 ÷ (50 + 30 + 20) = 30%. ₹1,20,000 × 30% = ₹36,000. An equal split would give ₹40,000."
+ },
+ {
+  "q": "Which of the following are EXCLUDED from 'plant and machinery' for the purpose of section 17(5)(d) (Explanation to section 17)? (Select all that apply)",
+  "opts": [
+   "Land, building and other civil structures",
+   "Telecommunication towers",
+   "Pipelines laid outside the factory premises",
+   "Foundation and structural supports for the machinery"
+  ],
+  "a": [
+   0,
+   1,
+   2
+  ],
+  "t": "Input Tax Credit",
+  "type": "multi",
+  "e": "'Plant and machinery' excludes land, buildings and civil structures, telecom towers and pipelines laid outside the factory premises. Foundation and structural supports of the machinery are included."
+ },
+ {
+  "q": "Which conditions of the OLD section 15(3)(b) are removed by the Finance Act 2026? (Select all that apply)",
+  "opts": [
+   "Discount must be linked to specific invoices",
+   "Discount must be established in an agreement entered into at or before the time of supply",
+   "Supplier must issue a credit note under section 34",
+   "Recipient must reverse the ITC attributable to the discount"
+  ],
+  "a": [
+   0,
+   1
+  ],
+  "t": "Valuation & Credit Notes",
+  "type": "multi",
+  "e": "The amended clause drops the pre-agreement and invoice-linking conditions. What remains: a credit note under section 34 and reversal of the attributable ITC by the recipient."
+ },
+ {
+  "q": "[Numerical] A supplier sells goods for ₹10,00,000 plus 18% GST. Later it gives a ₹1,00,000 post-sale discount with no prior agreement. After the amended section 15(3)(b) is in force, what is the effect?",
+  "opts": [
+   "Supplier reduces output tax by ₹18,000 through a credit note and the recipient reverses ITC of ₹18,000",
+   "Supplier reduces output tax by ₹1,80,000",
+   "Supplier cannot reduce tax as there was no prior agreement",
+   "Supplier reduces output tax by ₹18,000 but the recipient need not reverse ITC"
+  ],
+  "a": 0,
+  "t": "Valuation & Credit Notes",
+  "type": "single",
+  "e": "GST on the discount = ₹1,00,000 × 18% = ₹18,000. Under the old law the missing agreement would have blocked the reduction. Under the new law a section 34 credit note works, but the recipient must reverse ITC of ₹18,000."
+ },
+ {
+  "q": "The Finance Act, 2026 amends section 34(1) of the CGST Act. What does it add?",
+  "opts": [
+   "E-commerce operators alone can issue credit notes",
+   "Credit notes must be issued within 30 days of the discount",
+   "Debit notes may be issued only up to 30 September",
+   "A credit note may also be issued where a post-supply discount referred to in section 15(3)(b) is given"
+  ],
+  "a": 3,
+  "t": "Valuation & Credit Notes",
+  "type": "single",
+  "e": "Section 34(1) is aligned with the amended section 15(3)(b): a post-supply discount becomes an express ground for issuing a credit note."
+ },
+ {
+  "q": "[Tricky] A manufacturer gives a dealer a financial/commercial credit note as a post-sale discount, without reducing its own original output tax liability. Per CBIC Circular 251/08/2025, must the dealer reverse ITC?",
+  "opts": [
+   "Yes, but only if the discount exceeds 10%",
+   "Yes, ITC must be reversed in proportion to the discount",
+   "No, since the original value and tax paid remain unchanged, the dealer keeps full ITC",
+   "No, but only if the dealer is a composition taxpayer"
+  ],
+  "a": 2,
+  "t": "Valuation & Credit Notes",
+  "type": "single",
+  "e": "ITC reversal is linked to the reduction of tax through a section 34 credit note. If the supplier does not reduce its tax liability, the recipient is not required to reverse ITC."
+ },
+ {
+  "q": "[Tricky] Per CBIC Circular 251/08/2025, a post-sale discount given by a manufacturer to a dealer, merely to reduce the price at which goods are sold to end customers, is:",
+  "opts": [
+   "Always includible in the dealer's value of supply",
+   "Consideration for a promotional service by the dealer, taxable at 18%",
+   "A price reduction, not consideration for any independent supply by the dealer",
+   "Taxable as a deemed supply under Schedule I"
+  ],
+  "a": 2,
+  "t": "Valuation & Credit Notes",
+  "type": "single",
+  "e": "Such discounts push sales and only reduce the sale price. They are not consideration for a separate service. A specifically agreed promotional activity with defined consideration could still be a separate supply."
+ },
+ {
+  "q": "The Finance Act, 2026 omits section 13(8)(b) of the IGST Act. What is the place of supply of intermediary services now?",
+  "opts": [
+   "The place where the service is performed",
+   "Under section 13(2): the location of the recipient of services",
+   "The location of the supplier of services",
+   "The location of the underlying goods"
+  ],
+  "a": 1,
+  "t": "Place of Supply",
+  "type": "single",
+  "e": "Earlier the place of supply of intermediary services was deemed to be the location of the supplier, so services to overseas clients were not exports. Now the default rule of the recipient's location applies. The omission took effect on the Act's assent date, 30 March 2026."
+ },
+ {
+  "q": "[Tricky] A Mumbai-based agent arranges a sale of goods between a US manufacturer and a Singapore buyer. The ₹10,00,000 commission is received in convertible foreign exchange for a service on or after 30 March 2026. What is the GST treatment?",
+  "opts": [
+   "Export of services (zero-rated), provided the other conditions of section 2(6) are met",
+   "Taxable at 5% without ITC",
+   "Exempt under a notification",
+   "Taxable at 18%, i.e. IGST of ₹1,80,000, since the place of supply is the agent's location"
+  ],
+  "a": 0,
+  "t": "Place of Supply",
+  "type": "single",
+  "e": "The recipient (US manufacturer) is outside India, so the place of supply is outside India under section 13(2). The supply qualifies as an export and is zero-rated. Before the omission, the deemed location of the supplier would have made it taxable."
+ },
+ {
+  "q": "[Numerical] An Indian company pays ₹5,00,000 as commission to a US-based agent who arranges its purchases (an intermediary service), on or after 30 March 2026. What is the GST position?",
+  "opts": [
+   "₹90,000 payable by the US agent under forward charge",
+   "IGST of ₹90,000 is payable by the Indian company under reverse charge",
+   "₹25,000 payable under reverse charge",
+   "Nil, as the place of supply is outside India"
+  ],
+  "a": 1,
+  "t": "Place of Supply",
+  "type": "single",
+  "e": "Before the omission the place of supply of such services was the location of the foreign supplier, so no GST arose in India. Now the place of supply is the Indian recipient's location, so it is an import of service: 18% × ₹5,00,000 = ₹90,000 IGST under RCM."
+ },
+ {
+  "q": "[Tricky] After the omission of section 13(8)(b) of the IGST Act, which statement is correct?",
+  "opts": [
+   "The place of supply remains the location of the supplier",
+   "The definition of 'intermediary' is also omitted",
+   "Intermediary services become exempt",
+   "The definition of 'intermediary' in section 2(13) continues; only the special place-of-supply rule is removed"
+  ],
+  "a": 3,
+  "t": "Place of Supply",
+  "type": "single",
+  "e": "Only the special place-of-supply rule is removed. 'Intermediary' remains defined in section 2(13), which still matters, for example for other provisions of the law."
+ },
+ {
+  "q": "Section 74A of the CGST Act (a common provision for fraud and non-fraud demands) applies to demands relating to:",
+  "opts": [
+   "Financial years 2017-18 to 2023-24 only",
+   "Financial year 2025-26 onwards only",
+   "All financial years from 1 July 2017",
+   "Financial year 2024-25 onwards"
+  ],
+  "a": 3,
+  "t": "Demand & Appeals",
+  "type": "single",
+  "e": "Section 74A applies from FY 2024-25. Earlier periods continue under sections 73 (non-fraud) and 74 (fraud)."
+ },
+ {
+  "q": "[Numerical] The due date for the annual return for FY 2024-25 is 31 December 2025. What is the last date to issue a show cause notice under section 74A?",
+  "opts": [
+   "30 June 2030",
+   "30 September 2028",
+   "30 June 2029",
+   "31 December 2028"
+  ],
+  "a": 2,
+  "t": "Demand & Appeals",
+  "type": "single",
+  "e": "Section 74A allows 42 months from the due date of the annual return: 31 December 2025 + 42 months = 30 June 2029. Distractors: 36 months (31 Dec 2028), 33 months (30 Sept 2028, the old section 73 effective limit) and 54 months (30 June 2030, the old section 74 limit)."
+ },
+ {
+  "q": "Which statements about section 74A are correct? (Select all that apply)",
+  "opts": [
+   "It covers both fraud and non-fraud cases for FY 2024-25 onwards",
+   "Notice must be issued within 42 months from the due date of the annual return",
+   "A separate longer period of 5 years continues for fraud cases",
+   "The order must be issued within 12 months from the date of notice"
+  ],
+  "a": [
+   0,
+   1,
+   3
+  ],
+  "t": "Demand & Appeals",
+  "type": "multi",
+  "e": "Section 74A uses one 42-month notice period and a 12-month order period for all cases. The separate 5-year (54-month) fraud limit applies only under the old section 74."
+ },
+ {
+  "q": "[Numerical] Tax short-paid is ₹60,000 and there is no fraud, wilful misstatement or suppression. An order is passed under section 74A. What is the penalty?",
+  "opts": [
+   "₹9,000",
+   "₹60,000",
+   "₹10,000",
+   "₹6,000"
+  ],
+  "a": 2,
+  "t": "Demand & Appeals",
+  "type": "single",
+  "e": "For non-fraud cases the penalty is 10% of tax or ₹10,000, whichever is higher. 10% of ₹60,000 is ₹6,000, so ₹10,000 applies. For fraud cases, the penalty equals the tax."
+ },
+ {
+  "q": "Section 128A of the CGST Act provides conditional waiver of interest and penalty for:",
+  "opts": [
+   "Section 74 fraud demands for any year",
+   "Section 73 demands for FY 2017-18, 2018-19 and 2019-20 that do not involve fraud, wilful misstatement or suppression",
+   "Demands for FY 2020-21 to 2023-24",
+   "Demands under section 74A for FY 2024-25"
+  ],
+  "a": 1,
+  "t": "Demand & Appeals",
+  "type": "single",
+  "e": "Section 128A is a one-time amnesty for non-fraud section 73 demands of the first three years of GST. Conditions include payment of the full tax amount within the prescribed time."
+ },
+ {
+  "q": "[Numerical] An order under the CGST Act raises a tax demand of ₹50,00,000, of which ₹12,00,000 is admitted by the appellant. What is the pre-deposit to file an appeal under section 107 (ignoring the caps)?",
+  "opts": [
+   "₹5,00,000",
+   "₹15,80,000",
+   "₹3,80,000",
+   "₹17,00,000"
+  ],
+  "a": 1,
+  "t": "Demand & Appeals",
+  "type": "single",
+  "e": "Pre-deposit = the admitted tax in full (₹12,00,000) + 10% of the remaining disputed tax (10% × ₹38,00,000 = ₹3,80,000) = ₹15,80,000. The 10% applies only to the disputed portion, not on the total demand."
+ },
+ {
+  "q": "The Finance Act, 2026 inserts section 101A(1A) in the CGST Act. What does it allow?",
+  "opts": [
+   "It allows appeals against assessment orders to the High Court directly",
+   "It abolishes advance rulings",
+   "The Central Government may, pending constitution of the National Appellate Authority, empower an existing Authority to hear appeals under section 101B",
+   "It reduces the pre-deposit for appeals to the Tribunal"
+  ],
+  "a": 2,
+  "t": "Demand & Appeals",
+  "type": "single",
+  "e": "This is an interim appellate arrangement for appeals against advance rulings while the National Appellate Authority for Advance Ruling is yet to be constituted."
+ },
+ {
+  "q": "Under section 74A, the period within which the taxpayer may pay tax and interest (with the reduced penalty) after notice or order has been extended from 30 days to:",
+  "opts": [
+   "90 days",
+   "15 days",
+   "60 days",
+   "45 days"
+  ],
+  "a": 2,
+  "t": "Demand & Appeals",
+  "type": "single",
+  "e": "Section 74A gives a 60-day window, doubled from the earlier 30 days under sections 73 and 74."
+ },
+ {
+  "q": "[Tricky] A show cause notice is issued alleging fraud for FY 2022-23. Under which section is it issued?",
+  "opts": [
+   "Section 73",
+   "Section 74, as section 74A applies only from FY 2024-25",
+   "Section 74A",
+   "Section 74A or section 73 at the officer's option"
+  ],
+  "a": 1,
+  "t": "Demand & Appeals",
+  "type": "single",
+  "e": "For periods up to FY 2023-24 the old sections 73 (non-fraud) and 74 (fraud) continue to apply. Section 74A is not available for FY 2022-23."
+ },
+ {
+  "q": "Which of the following were made through amendments by the Finance Act, 2026? (Select all that apply)",
+  "opts": [
+   "Introduction of the 40% GST slab by amending section 9",
+   "Omission of section 13(8)(b) of the IGST Act",
+   "Reduction of the registration threshold for goods suppliers to ₹20 lakh",
+   "Substitution of clause (b) of section 15(3) of the CGST Act"
+  ],
+  "a": [
+   1,
+   3
+  ],
+  "t": "Finance Act Changes",
+  "type": "multi",
+  "e": "The Finance Act 2026 changed sections 13(8)(b) IGST, 15(3)(b), 34(1), 54(6), 54(14) and 101A(1A). GST rates are not changed by the Finance Act; they are set by notification."
+ },
+ {
+  "q": "The GST rate changes effective 22 September 2025 were given effect through:",
+  "opts": [
+   "A GST Council resolution alone, without any notification",
+   "An ordinance amending section 9 of the CGST Act",
+   "Amendments to the Schedules by the Finance Act 2025",
+   "Rate notifications issued on the GST Council's recommendation (e.g. Notification No. 9/2025-Central Tax (Rate))"
+  ],
+  "a": 3,
+  "t": "Finance Act Changes",
+  "type": "single",
+  "e": "Rates under GST are notified by the Central Government on the Council's recommendation. The principal rate notifications were issued on 17 September 2025 and became effective from 22 September 2025."
+ }
+];
+const MAX_PTS=QUESTIONS.filter(q=>q.type==='single').length*PTS_CORRECT + QUESTIONS.filter(q=>q.type==='multi').length*PTS_CORRECT;
+
+// ════════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════════
+let qs=[],cur=0,answers=[],timerIv=null,tl=TT,locked=false,msSelected=[];
+const $=id=>document.getElementById(id);
+
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));const el=$(id);if(el)el.classList.add('active');}
+function pulseEl(id){const el=$(id);if(!el)return;el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');}
+
+function calcPoints(ans,q){
+  if(!ans.done) return PTS_SKIP;
+  if(q.type==='multi') return ans.ok ? PTS_CORRECT : 0;
+  if(ans.sel===-1) return PTS_SKIP;
+  return ans.ok ? PTS_CORRECT : PTS_WRONG;
+}
+function calcTotalPoints(){
+  return answers.reduce((sum,ans,i)=>sum+calcPoints(ans,qs[i]),0);
+}
+function calcAccuracy(){
+  const attempted=answers.some((ans,i)=>{
+    if(!ans.done) return false;
+    const q=qs[i];
+    return q.type==='multi'?(ans.selArr&&ans.selArr.length>0):(ans.sel!==-1);
+  });
+  if(!attempted) return null;
+  const marksGot=Math.max(calcTotalPoints(),0);
+  return Math.round((marksGot/MAX_PTS)*100);
+}
+
+function updateTicker(){
+  let sc=0,wr=0,sk=0;
+  for(let i=0;i<answers.length;i++){
+    const ans=answers[i];const q=qs[i];
+    if(!ans.done) continue;
+    const isMulti=q.type==='multi';
+    const attempted=isMulti?(ans.selArr&&ans.selArr.length>0):(ans.sel!==-1);
+    if(!attempted) sk++;
+    else if(ans.ok) sc++;
+    else wr++;
+  }
+  const totalPts=calcTotalPoints();
+  const acc=calcAccuracy();
+  $('t-sc').textContent=sc;
+  $('t-wr').textContent=wr;
+  $('t-acc').textContent=acc!==null?acc+'%':'—';
+  $('ts-live').textContent=totalPts;
+  const doneCount=answers.filter(a=>a.done).length;
+  const unDoneCount=answers.filter(a=>!a.done).length;
+  $('jb-ans-count').textContent=doneCount;
+  $('jb-un-count').textContent=unDoneCount;
+  $('jump-ans-btn').disabled=(doneCount===0);
+  $('jump-un-btn').disabled=(unDoneCount===0);
+}
+
+// ════════════════════════════════════════════════════════
+//  START
+// ════════════════════════════════════════════════════════
+function startQuiz(){
+  const inputEl=$('username');
+  const typedName=inputEl?inputEl.value.trim():'';
+  if(!typedName){if(inputEl){inputEl.style.borderColor='var(--danger)';inputEl.focus();}return;}
+  userName=typedName;
+  qs=shuffle(QUESTIONS);
+  cur=0;
+  answers=qs.map(()=>({sel:-1,selArr:[],ok:false,done:false}));
+  locked=false;msSelected=[];
+  $('live-ticker').style.display='flex';
+  $('total-score-btn').style.display='flex';
+  updateTicker();buildSegs();showScreen('quiz-screen');loadQ();
+}
+
+function buildSegs(){
+  $('seg-track').innerHTML=qs.map((_,i)=>`<div class="seg" id="seg-${i}"></div>`).join('');
+}
+function refreshSegs(){
+  for(let i=0;i<qs.length;i++){
+    const el=$('seg-'+i);if(!el)continue;el.className='seg';
+    const ans=answers[i];const q=qs[i];
+    if(ans.done){
+      const isMulti=q.type==='multi';
+      const attempted=isMulti?(ans.selArr&&ans.selArr.length>0):(ans.sel!==-1);
+      if(!attempted) el.classList.add('ss');
+      else if(ans.ok) el.classList.add('sc');
+      else el.classList.add('sw');
+    } else if(i===cur) el.classList.add('cur');
+  }
+}
+
+function loadQ(){
+  if(cur>=qs.length){showScore();return;}
+  clearInterval(timerIv);
+  msSelected=[];
+  const q=qs[cur];const n=cur+1;const L=['A','B','C','D'];const ans=answers[cur];
+  const isMulti=q.type==='multi';
+
+  $('q-counter').textContent=`Q ${String(n).padStart(2,'0')} / ${qs.length}`;
+  $('q-topic').textContent=q.t;
+  $('q-num').textContent=`Question ${String(n).padStart(2,'0')}`;
+  $('q-text').textContent=q.q;
+  $('q-instruction').textContent=isMulti?'Select ALL that apply:':'';
+  $('q-card').className='q-card';
+  $('q-type-badge-wrap').innerHTML=isMulti
+    ?'<span class="q-type-badge-el q-type-multi">Multiple Select — +4 if ALL correct, 0 otherwise</span>'
+    :'<span class="q-type-badge-el q-type-single">Single Select — +4 correct · −1 wrong · 0 skip</span>';
+
+  const pct=cur/qs.length*100;
+  $('progress-bar').style.width=pct+'%';
+  $('pct-bar').style.width=pct+'%';
+  $('pbl-val').textContent=Math.round(pct)+'%';
+
+  $('options').innerHTML=q.opts.map((o,i)=>
+    `<button class="opt" id="opt-${i}" onclick="${isMulti?`toggleMulti(${i})`:`pick(${i})`}">
+      <span class="opt-letter">${L[i]}</span><span>${o}</span>
+    </button>`
+  ).join('');
+  $('ms-submit-row').style.display=isMulti?'block':'none';
+  if(isMulti){$('ms-submit-btn').disabled=true;}
+
+  if(ans.done){
+    if(isMulti&&ans.selArr&&ans.selArr.length>0){
+      ans.selArr.forEach(i=>{const el=$('opt-'+i);if(el)el.classList.add('ms-selected');});
+    }
+    locked=true;lockOptions();
+    revealOptions(q,ans);
+    showFeedback(ans.ok,q,!(isMulti?(ans.selArr&&ans.selArr.length>0):(ans.sel!==-1)));
+    setTimerDisplay(0);
+  } else {
+    locked=false;
+    const fb=$('feedback');fb.className='feedback';$('fb-lbl').textContent='';$('fb-txt').textContent='';
+    startTimer();
+  }
+  $('btn-prev').disabled=(cur===0);
+  $('btn-next').textContent=(cur===qs.length-1)?'Finish':'Next';
+  refreshSegs();
+}
+
+function toggleMulti(i){
+  if(locked)return;
+  const idx=msSelected.indexOf(i);
+  if(idx>=0) msSelected.splice(idx,1);else msSelected.push(i);
+  for(let j=0;j<qs[cur].opts.length;j++){
+    const btn=$('opt-'+j);if(!btn)continue;
+    msSelected.includes(j)?btn.classList.add('ms-selected'):btn.classList.remove('ms-selected');
+  }
+  $('ms-submit-btn').disabled=(msSelected.length===0);
+}
+function submitMultiSelect(){
+  if(locked)return;
+  locked=true;clearInterval(timerIv);
+  const q=qs[cur];
+  const correctArr=[...q.a].sort((a,b)=>a-b);
+  const selectedArr=[...msSelected].sort((a,b)=>a-b);
+  const ok=JSON.stringify(correctArr)===JSON.stringify(selectedArr);
+  answers[cur]={sel:selectedArr.length>0?selectedArr[0]:-1,selArr:selectedArr,ok,done:true};
+  lockOptions();revealOptions(q,answers[cur]);
+  showFeedback(ok,q,false);
+  refreshSegs();updateTicker();
+  if(ok){pulseEl('t-sc');pulseEl('ts-live');}else{pulseEl('t-wr');}
+}
+
+function revealOptions(q,ans){
+  const correctIdxs=Array.isArray(q.a)?q.a:[q.a];
+  correctIdxs.forEach(ci=>{const el=$('opt-'+ci);if(el)el.classList.add('correct');});
+  if(q.type==='multi'){
+    (ans.selArr||[]).forEach(si=>{
+      if(!correctIdxs.includes(si)){const el=$('opt-'+si);if(el)el.classList.add('wrong');}
+    });
+  } else {
+    if(ans.sel>=0&&ans.sel!==q.a){const el=$('opt-'+ans.sel);if(el)el.classList.add('wrong');}
+  }
+}
+
+function startTimer(){
+  tl=TT;setTimerDisplay(tl);
+  timerIv=setInterval(()=>{tl--;setTimerDisplay(tl);if(tl<=0){clearInterval(timerIv);autoSkip();}},1000);
+}
+function setTimerDisplay(t){
+  const pct=Math.max(t,0)/TT;const off=CIRC*(1-pct);const dng=t<=10&&t>0;
+  $('ring-fg').style.strokeDashoffset=off;
+  $('ring-fg').style.stroke=dng?'#f43f5e':'var(--accent)';
+  $('timer-text').textContent=`0:${String(Math.max(t,0)).padStart(2,'0')}`;
+  $('timer-text').className='timer-text'+(dng?' dng':'');
+  $('time-bar').style.width=(pct*100)+'%';
+  $('time-bar').className='bar-fill bar-time'+(dng?' dng':'');
+  $('tbl-val').textContent=Math.max(t,0)+'s';
+  $('tbl-val').className='tbl-val'+(dng?' dng':'');
+  const ts=$('timer-section');
+  if(ts){if(dng)ts.classList.add('dng-pulse');else ts.classList.remove('dng-pulse');}
+}
+function autoSkip(){
+  if(locked)return;
+  locked=true;
+  const q=qs[cur];
+  answers[cur]={sel:-1,selArr:[],ok:false,done:true};
+  lockOptions();revealOptions(q,answers[cur]);
+  showFeedback(false,q,true);
+  refreshSegs();updateTicker();
+}
+
+function pick(i){
+  if(locked)return;locked=true;clearInterval(timerIv);
+  const q=qs[cur];const ok=(i===q.a);
+  answers[cur]={sel:i,selArr:[i],ok,done:true};
+  lockOptions();revealOptions(q,answers[cur]);
+  showFeedback(ok,q,false);
+  refreshSegs();updateTicker();
+  if(ok){pulseEl('t-sc');pulseEl('ts-live');}else{pulseEl('t-wr');}
+}
+function lockOptions(){
+  document.querySelectorAll('.opt').forEach(o=>{o.setAttribute('disabled','');o.classList.add('locked-opt');});
+}
+
+function showFeedback(ok,q,skip){
+  const fb=$('feedback');
+  let cls,lbl;
+  if(skip){cls='sfb';lbl='Time expired — 0 pts';}
+  else if(ok){cls='cfb';lbl=`Correct — +${PTS_CORRECT} pts`;}
+  else{
+    if(q.type==='multi'){cls='wfb';lbl='Incorrect — 0 pts (all-or-nothing for MSQ)';}
+    else{cls='wfb';lbl=`Incorrect — ${PTS_WRONG} pt`;}
+  }
+  fb.className='feedback show '+cls;
+  $('fb-lbl').textContent=lbl;
+  $('fb-txt').textContent=q.e;
+}
+
+function nextQ(){
+  clearInterval(timerIv);
+  if(!locked){locked=true;answers[cur]={sel:-1,selArr:[],ok:false,done:true};refreshSegs();updateTicker();}
+  cur++;loadQ();
+}
+function prevQ(){
+  if(cur<=0)return;clearInterval(timerIv);
+  if(!locked){locked=true;answers[cur]={sel:-1,selArr:[],ok:false,done:true};}
+  cur--;loadQ();
+}
+function jumpToAnswered(){
+  if(!locked){locked=true;answers[cur]={sel:-1,selArr:[],ok:false,done:true};refreshSegs();updateTicker();}
+  clearInterval(timerIv);
+  for(let offset=1;offset<=qs.length;offset++){const idx=(cur+offset)%qs.length;if(answers[idx].done){cur=idx;loadQ();return;}}
+}
+function jumpToUnanswered(){
+  if(!locked){locked=true;answers[cur]={sel:-1,selArr:[],ok:false,done:true};refreshSegs();updateTicker();}
+  clearInterval(timerIv);
+  for(let offset=1;offset<=qs.length;offset++){const idx=(cur+offset)%qs.length;if(!answers[idx].done){cur=idx;loadQ();return;}}
+}
+
+// ════════════════════════════════════════════════════════
+//  SCORE SCREEN + WEBHOOK
+// ════════════════════════════════════════════════════════
+function showScore(){
+  clearInterval(timerIv);
+  $('live-ticker').style.display='none';
+  $('total-score-btn').style.display='none';
+  document.getElementById('score-overlay').classList.remove('show');
+
+  // Capture the exact moment of submission immediately
+  const submitTimestamp=new Date();
+
+  let sc=0,wr=0,sk=0;
+  for(let i=0;i<answers.length;i++){
+    const ans=answers[i];const q=qs[i];
+    if(!ans.done){sk++;continue;}
+    const isMulti=q.type==='multi';
+    const attempted=isMulti?(ans.selArr&&ans.selArr.length>0):(ans.sel!==-1);
+    if(!attempted) sk++;
+    else if(ans.ok) sc++;
+    else wr++;
+  }
+
+  const totalPts=calcTotalPoints();
+  const marksGot=Math.max(totalPts,0);
+  const acc=calcAccuracy();
+  const accStr=acc!==null?`${acc}% (${marksGot}/${MAX_PTS})`:'—';
+  const ringPct=acc!==null?acc:0;
+
+  const rank=acc===null?'—':acc>=90?'S+':acc>=80?'A':acc>=70?'B':acc>=60?'C':acc>=50?'D':'F';
+
+  $('final-pts').textContent=totalPts;
+  $('final-acc').textContent=acc!==null?acc+'%':'—';
+  $('s-cor').textContent=sc;$('s-wr').textContent=wr;$('s-sk').textContent=sk;
+  $('bk-pts').textContent=totalPts+' / '+MAX_PTS;
+  $('bk-acc').textContent=accStr;
+  $('bk-rank').textContent=rank;
+
+  const grade=acc!==null?acc:0;
+  let title,msg;
+  if(grade>=80){title='Excellent Work';msg='Strong command of the GST amendments. You are exam-ready on what changed.';}
+  else if(grade>=60){title='Good Effort';msg='Solid foundation — review the flagged topics for mastery.';}
+  else{title='Keep Practicing';msg='Revisit the material and try again to strengthen your understanding.';}
+  $('result-title').textContent=title;$('result-msg').textContent=msg;
+
+  const col=grade>=80?'#10b981':grade>=60?'#f59e0b':'#f43f5e';
+  setTimeout(()=>{
+    const fg=$('sc-fg');
+    fg.style.strokeDashoffset=SCIRC*(1-ringPct/100);
+    fg.style.stroke=col;
+    $('final-pts').style.color=col;
+    $('final-acc').style.color=col;
+  },200);
+
+  $('review-section').style.display='none';
+  showScreen('score-screen');
+
+  // Send to Google Apps Script webhook, then load leaderboard
+  sendScoreToDatabase(userName,QUIZ_NAME,totalPts,accStr,submitTimestamp);
+}
+
+function sendScoreToDatabase(userId,currentQuizName,finalScore,finalAccuracy,submitTimestamp){
+  const statusEl=$('leaderboard-status');
+  if(statusEl)statusEl.textContent='SAVING...';
+  // Capture the exact moment of submission
+  const currentTimestamp=(submitTimestamp instanceof Date?submitTimestamp:new Date()).toLocaleString();
+
+  const payload={
+    quizName:currentQuizName, // "GST_Amendments_Quiz"
+    userId:userId,
+    score:finalScore,
+    accuracy:finalAccuracy,
+    submitTime:currentTimestamp
+  };
+
+  // mode:'no-cors' is used deliberately: Google Apps Script web-app
+  // responses often lack Access-Control-Allow-Origin headers, which makes
+  // a normal fetch() throw before the save is confirmed — even though the
+  // POST itself reaches the script and the row gets written. Firing this
+  // as a "no-cors" request guarantees the save request is sent reliably;
+  // we then re-fetch the leaderboard with a normal (readable) GET below.
+  fetch(WEB_APP_URL,{
+    method:'POST',
+    mode:'no-cors',
+    body:JSON.stringify(payload)
+  })
+  .then(()=>{
+    console.log('Score, accuracy, and timestamp saved successfully!');
+  })
+  .catch(error=>{
+    console.error('Error saving data:',error);
+  })
+  .finally(()=>{
+    // small delay so the sheet write has time to commit before we re-read it
+    setTimeout(()=>fetchLeaderboard(finalScore,finalAccuracy),700);
+  });
+}
+
+function fetchLeaderboard(playerScore,playerAcc){
+  const statusEl=$('leaderboard-status');
+  fetch(WEB_APP_URL+'?action=get&quizName='+encodeURIComponent(QUIZ_NAME)+'&t='+Date.now(),{cache:'no-store'})
+  .then(res=>{
+    if(!res.ok)throw new Error('GET failed with status '+res.status);
+    return res.json();
+  })
+  .then(data=>{
+    if(data&&data.status==='error'){throw new Error('Apps Script error: '+data.message);}
+    renderLeaderboard(data,playerScore,playerAcc);
+  })
+  .catch(err=>{
+    console.error('Leaderboard fetch failed — check that doGet is deployed on the Apps Script and returns JSON:',err);
+    if(statusEl)statusEl.textContent='OFFLINE';
+    displayFallbackLeaderboard(playerScore,playerAcc);
+  });
+}
+function parseAcc(v){
+  if(v===undefined||v===null||v==='—')return 0;
+  let num=parseFloat(String(v).replace('%',''))||0;
+  if(num>0&&num<=1.0)return num*100;
+  return num;
+}
+function renderLeaderboard(data,currentScore,currentAcc){
+  const tbody=$('leaderboard-body');const statusEl=$('leaderboard-status');
+  if(statusEl)statusEl.textContent='LIVE';if(!tbody)return;
+  if(!Array.isArray(data))data=data.data||data.result||[];
+  data=data.filter(row=>{
+    const qn=(row.quizName||row.quiz||'').toString();
+    return !qn||qn===QUIZ_NAME;
+  });
+  data.sort((a,b)=>{
+    const sA=Number(a.score??a.Points??a.Score??0);const sB=Number(b.score??b.Points??b.Score??0);
+    if(sB!==sA)return sB-sA;
+    return parseAcc(b.accuracy??b.Accuracy??0)-parseAcc(a.accuracy??a.Accuracy??0);
+  });
+  if(!data.length){tbody.innerHTML=`<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:1.2rem">No records yet — you're first!</td></tr>`;return;}
+  tbody.innerHTML=data.map((row,idx)=>{
+    const rank=idx+1;
+    const bc=rank===1?'rank-badge rank-1':rank===2?'rank-badge rank-2':rank===3?'rank-badge rank-3':'rank-badge';
+    const name=(row.name||row.Name||row.userId||row.UserId||'Anonymous').toString();
+    const pts=row.score??row.Points??row.Score??0;
+    const accRaw=row.accuracy??row.Accuracy??'—';
+    const isMe=name.toUpperCase()===userName.toUpperCase();
+    return `<tr style="${isMe?'background:rgba(124,58,237,.05);':''}">
+      <td><span class="${bc}">${rank}</span></td>
+      <td style="font-weight:600;color:${isMe?'var(--accent)':'var(--text)'};">${name}${isMe?' (You)':''}</td>
+      <td style="text-align:right;font-weight:700;color:var(--success)">${pts}</td>
+      <td style="text-align:right;color:var(--accent2)">${accRaw}</td>
+    </tr>`;
+  }).join('');
+}
+function displayFallbackLeaderboard(playerScore,playerAcc){
+  const mock=[{name:userName||'You',score:playerScore,accuracy:playerAcc}];
+  renderLeaderboard(mock,playerScore,playerAcc);
+  const s=$('leaderboard-status');if(s)s.textContent='LOCAL ONLY';
+}
+function goToLeaderboard(){showScreen('leaderboard-screen');}
+
+// ════════════════════════════════════════════════════════
+//  REVIEW
+// ════════════════════════════════════════════════════════
+function toggleReview(){
+  const sec=$('review-section');
+  if(sec.style.display==='block'){sec.style.display='none';return;}
+  sec.style.display='block';
+  const L=['A','B','C','D'];
+  $('review-list').innerHTML=answers.map((ans,i)=>{
+    const q=qs[i];const isMulti=q.type==='multi';
+    const attempted=isMulti?(ans.selArr&&ans.selArr.length>0):(ans.sel!==-1);
+    const skip=!ans.done||!attempted;
+    const cls=skip?'rs':ans.ok?'rc':'rw';
+    const ptsBadge=skip
+      ?'<span class="review-pts pts-zero">0 pts</span>'
+      :ans.ok
+        ?`<span class="review-pts pts-pos">+${PTS_CORRECT} pts</span>`
+        :isMulti
+          ?'<span class="review-pts pts-zero">0 pts</span>'
+          :`<span class="review-pts pts-neg">${PTS_WRONG} pt</span>`;
+    let selLine='';
+    if(skip){selLine='<span class="rv-s">Skipped / Time Expired</span>';}
+    else if(isMulti){
+      const labs=(ans.selArr||[]).map(j=>`${L[j]}) ${q.opts[j]}`).join(', ');
+      selLine=ans.ok?`<span class="rv-c">${labs}</span>`:`<span class="rv-w">${labs||'(none)'}</span>`;
+    } else {
+      selLine=ans.ok?`<span class="rv-c">${L[ans.sel]}) ${q.opts[ans.sel]}</span>`:`<span class="rv-w">${L[ans.sel]}) ${q.opts[ans.sel]}</span>`;
+    }
+    const correctLine=(!skip&&!ans.ok)
+      ?`<div class="review-ans rv-c">Correct: ${Array.isArray(q.a)?q.a.map(j=>`${L[j]}) ${q.opts[j]}`).join(', '):`${L[q.a]}) ${q.opts[q.a]}`}</div>`:'';
+    return `<div class="review-item ${cls}">
+      <div class="review-q">${i+1}. ${q.q} ${ptsBadge}</div>
+      <div class="review-ans">${selLine}</div>
+      ${correctLine}
+      <div class="review-exp">${q.e}</div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════════
+//  LIVE SCORE OVERLAY
+// ════════════════════════════════════════════════════════
+function showScoreOverlay(){
+  let sc=0,wr=0,sk=0;
+  for(let i=0;i<answers.length;i++){
+    const ans=answers[i];const q=qs[i];
+    if(!ans.done) continue;
+    const isMulti=q.type==='multi';
+    const attempted=isMulti?(ans.selArr&&ans.selArr.length>0):(ans.sel!==-1);
+    if(!attempted) sk++;
+    else if(ans.ok) sc++;
+    else wr++;
+  }
+  const totalPts=calcTotalPoints();
+  const acc=calcAccuracy();
+  $('sp-cor').textContent=sc;$('sp-wr').textContent=wr;$('sp-sk').textContent=sk;
+  $('sp-pts').textContent=totalPts;
+  const marksGot=Math.max(totalPts,0);
+  $('sp-acc').textContent=acc!==null?`${acc}% (${marksGot}/${MAX_PTS})`:'—';
+  document.getElementById('score-overlay').classList.add('show');
+}
+function closeScoreOverlay(e){if(e.target===document.getElementById('score-overlay'))document.getElementById('score-overlay').classList.remove('show');}
+
+function restartQuiz(){
+  clearInterval(timerIv);
+  $('live-ticker').style.display='none';$('total-score-btn').style.display='none';
+  document.getElementById('score-overlay').classList.remove('show');
+  $('review-section').style.display='none';
+  const f=$('username');if(f)f.value='';
+  showScreen('start-screen');
+}
+
+// ════════════════════════════════════════════════════════
+//  FULL-PAGE WATER RIPPLE (background only, pointer-events:none
+//  so it never blocks clicks — driven by document-level pointer events)
+// ════════════════════════════════════════════════════════
+(function(){
+  const canvas=document.getElementById('bg-ripple');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  let W,H,cols,rows,curr,prev;
+  const damp=0.965;
+  const CELL=6;
+  const MAX_R=5;
+
+  function resize(){
+    W=canvas.width=window.innerWidth;
+    H=canvas.height=window.innerHeight;
+    if(W<=0||H<=0)return;
+    cols=Math.max(Math.floor(W/CELL),1);
+    rows=Math.max(Math.floor(H/CELL),1);
+    curr=new Float32Array(cols*rows);
+    prev=new Float32Array(cols*rows);
+  }
+  resize();
+  let resizeTO;
+  window.addEventListener('resize',()=>{clearTimeout(resizeTO);resizeTO=setTimeout(resize,120);});
+  window.addEventListener('orientationchange',()=>{setTimeout(resize,200);});
+
+  function idx(x,y){return y*cols+x;}
+  function drop(x,y,r){
+    if(!cols||!rows)return;
+    r=Math.min(r,MAX_R);
+    const cx=Math.floor(x/CELL),cy=Math.floor(y/CELL);
+    for(let dy=-r;dy<=r;dy++)for(let dx=-r;dx<=r;dx++){
+      if(dx*dx+dy*dy<=r*r){
+        const nx=cx+dx,ny=cy+dy;
+        if(nx>=0&&nx<cols&&ny>=0&&ny<rows)curr[idx(nx,ny)]=80;
+      }
+    }
+  }
+
+  // Global pointer listeners (canvas itself is pointer-events:none)
+  let lastMove=0;
+  document.addEventListener('mousemove',e=>{
+    const now=Date.now();
+    if(now-lastMove<70)return;
+    lastMove=now;
+    drop(e.clientX,e.clientY,1);
+  });
+  document.addEventListener('click',e=>{
+    drop(e.clientX,e.clientY,3);
+  });
+  document.addEventListener('touchmove',e=>{
+    for(const t of e.touches){drop(t.clientX,t.clientY,2);}
+  },{passive:true});
+  document.addEventListener('touchstart',e=>{
+    for(const t of e.touches){drop(t.clientX,t.clientY,3);}
+  },{passive:true});
+
+  // Gentle ambient ripples
+  setInterval(()=>{
+    if(W>0&&H>0) drop(Math.random()*W,Math.random()*H,1);
+  },2600);
+
+  function tick(){
+    if(!curr||!prev||!cols||!rows){requestAnimationFrame(tick);return;}
+    for(let y=1;y<rows-1;y++){
+      for(let x=1;x<cols-1;x++){
+        const i=idx(x,y);
+        curr[i]=(prev[idx(x-1,y)]+prev[idx(x+1,y)]+prev[idx(x,y-1)]+prev[idx(x,y+1)])/2-curr[i];
+        curr[i]*=damp;
+      }
+    }
+    [curr,prev]=[prev,curr];
+    const imgData=ctx.createImageData(W,H);
+    const d=imgData.data;
+    for(let y=1;y<rows-1;y++){
+      for(let x=1;x<cols-1;x++){
+        const shade=prev[idx(x,y)];
+        if(Math.abs(shade)<0.5)continue;
+        const sx=Math.min(Math.max(prev[idx(x+1,y)]-shade,-3),3);
+        const sy=Math.min(Math.max(prev[idx(x,y+1)]-shade,-3),3);
+        const intensity=Math.abs(shade)*0.4;
+        const bright=Math.min(intensity,30);
+        const r=124+Math.round(sx*4);
+        const g=90+Math.round(sy*3);
+        const b=Math.round(230+bright*0.25);
+        const a=Math.round(Math.min(intensity*0.55,18));
+        for(let by=0;by<CELL;by++){
+          for(let bx=0;bx<CELL;bx++){
+            const px=((y*CELL+by)*W+(x*CELL+bx))*4;
+            if(px<0||px>=d.length-3)continue;
+            d[px]=r;d[px+1]=g;d[px+2]=b;d[px+3]=a;
+          }
+        }
+      }
+    }
+    ctx.putImageData(imgData,0,0);
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+</script>
+</body>
+</html>
